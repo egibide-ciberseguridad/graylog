@@ -3,14 +3,14 @@ version: "3.5"
 services:
 
   mongo:
-    image: mongo:5.0.13
+    image: mongo:${MONGODB_VERSION}
     volumes:
       - mongo_data:/data/db
     networks:
       - graylog
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION}
     volumes:
       - es_data:/usr/share/elasticsearch/data
     environment:
@@ -30,15 +30,13 @@ services:
       - graylog
 
   graylog:
-    image: graylog/graylog:5.0
+    image: graylog/graylog:${GRAYLOG_VERSION}
     volumes:
       - graylog_journal:/usr/share/graylog/data/journal
     environment:
-      # CHANGE ME (must be at least 16 characters)!
-      - GRAYLOG_PASSWORD_SECRET=1234567890abcdef
-      # Password: 12345Abcde
-      - GRAYLOG_ROOT_PASSWORD_SHA2=900563a48c044074dc467feac110df09372301dbc10968c2c4491ad2398c93e6
-      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
+      - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
+      - GRAYLOG_ROOT_PASSWORD_SHA2=${GRAYLOG_ROOT_PASSWORD_SHA2}
+      - GRAYLOG_HTTP_EXTERNAL_URI=${GRAYLOG_HTTP_EXTERNAL_URI}
       - GRAYLOG_ROOT_TIMEZONE=Europe/Madrid
     networks:
       - graylog
