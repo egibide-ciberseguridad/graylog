@@ -10,22 +10,22 @@ endif
 help: _header
 	${info }
 	@echo Opciones:
-	@echo -------------------------------------------------------------
+	@echo ----------------------
 	@echo start
 	@echo stop / stop-all
 	@echo stats / logs
 	@echo clean
-	@echo -------------------------------------------------------------
+	@echo ----------------------
 
 _header:
-	@echo ---------
+	@echo -------
 	@echo Graylog
-	@echo ---------
+	@echo -------
 
 _start:
-	@docker compose up -d https-portal
+	@docker compose up -d graylog
 
-start: _start _urls
+start: _header _start _urls
 
 stop:
 	@docker compose stop
@@ -44,6 +44,6 @@ clean:
 
 _urls: _header
 	${info }
-	@echo ---------------------------------
-	@echo [Graylog] https://graylog.test
-	@echo ---------------------------------
+	@echo -------------------------------
+	@echo [Graylog] http://localhost:9000
+	@echo -------------------------------

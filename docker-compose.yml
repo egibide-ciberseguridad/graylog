@@ -2,25 +2,6 @@ version: "3.5"
 
 services:
 
-  https-portal:
-    image: steveltn/https-portal:${HTTPS_PORTAL_VERSION:-1}
-    environment:
-      DOMAINS: >
-        graylog.test -> http://graylog:9000
-      CLIENT_MAX_BODY_SIZE: 128M
-      SERVER_NAMES_HASH_BUCKET_SIZE: 1024
-      STAGE: local
-    volumes:
-      - https-portal_certs:/var/lib/https-portal
-      - https-portal_logs:/var/log/nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    depends_on:
-      - graylog
-    networks:
-      - graylog
-
   mongo:
     image: mongo:5.0.13
     volumes:
@@ -57,24 +38,24 @@ services:
       - GRAYLOG_PASSWORD_SECRET=1234567890abcdef
       # Password: 12345Abcde
       - GRAYLOG_ROOT_PASSWORD_SHA2=900563a48c044074dc467feac110df09372301dbc10968c2c4491ad2398c93e6
-      - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
       - GRAYLOG_ROOT_TIMEZONE=Europe/Madrid
     networks:
       - graylog
     depends_on:
       - mongo
       - elasticsearch
-    expose:
+    ports:
       # Graylog web interface and REST API
-      - 9000
+      - "9000:9000"
       # Syslog TCP
-      - 1514
+      - "1514:1514"
       # Syslog UDP
-      - 1514/udp
+      - "1514:1514/udp"
       # GELF TCP
-      - 12201
+      - "12201:12201"
       # GELF UDP
-      - 12201/udp
+      - "12201:12201/udp"
 
 networks:
   graylog:
@@ -83,5 +64,3 @@ volumes:
   mongo_data:
   es_data:
   graylog_journal:
-  https-portal_certs:
-  https-portal_logs:
