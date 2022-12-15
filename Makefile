@@ -10,12 +10,12 @@ endif
 help: _header
 	${info }
 	@echo Opciones:
-	@echo ----------------------
-	@echo start
+	@echo ---------------------------------
+	@echo start / start-external-network
 	@echo stop / stop-all
 	@echo stats / logs
-	@echo clean
-	@echo ----------------------
+	@echo clean / clean-containers-networks
+	@echo ---------------------------------
 
 _header:
 	@echo -------
