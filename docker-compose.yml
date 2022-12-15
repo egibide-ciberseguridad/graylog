@@ -1,0 +1,63 @@
+version: "3.5"
+
+services:
+
+  # Graylog: https://docs.graylog.org/en/latest/pages/installation/docker.html
+
+  # MongoDB: https://hub.docker.com/_/mongo/
+  mongo:
+    image: mongo:3
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - graylog
+
+  # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/6.x/docker.html
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.8.5
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=localhost
+      - network.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    networks:
+      - graylog
+
+  # Graylog: https://hub.docker.com/r/graylog/graylog/
+  graylog:
+    image: graylog/graylog:3.2
+    volumes:
+      - graylog_journal:/usr/share/graylog/data/journal
+    environment:
+      # CHANGE ME (must be at least 16 characters)!
+      - GRAYLOG_PASSWORD_SECRET=D?ET88r[2H/^(wvkCg2Uj/MVNf7ar7bz
+      # Password: 12345Abcde
+      - GRAYLOG_ROOT_PASSWORD_SHA2=900563a48c044074dc467feac110df09372301dbc10968c2c4491ad2398c93e6
+      - GRAYLOG_HTTP_EXTERNAL_URI=https://graylog.ikasgela.test/
+      - GRAYLOG_ROOT_TIMEZONE=Europe/Madrid
+    networks:
+      - graylog
+    depends_on:
+      - mongo
+      - elasticsearch
+    expose:
+      # Graylog web interface and REST API
+      - 9000
+      # Syslog TCP
+      - 1514
+      # Syslog UDP
+      - 1514/udp
+      # GELF TCP
+      - 12201
+      # GELF UDP
+      - 12201/udp
+
+networks:
+  graylog:
+
+volumes:
+  mongo_data:
+  es_data:
+  graylog_journal:
