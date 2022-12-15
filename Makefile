@@ -47,6 +47,9 @@ logs:
 clean:
 	@docker compose down -v --remove-orphans
 
+clean-containers-networks:
+	@docker compose down --remove-orphans
+
 _urls: _header
 	${info }
 	@echo -------------------------------
