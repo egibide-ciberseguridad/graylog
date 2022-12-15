@@ -6,8 +6,6 @@ services:
     image: mongo:${MONGODB_VERSION}
     volumes:
       - mongo_data:/data/db
-    networks:
-      - graylog
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION}
@@ -26,8 +24,6 @@ services:
       resources:
         limits:
           memory: 1g
-    networks:
-      - graylog
 
   graylog:
     image: graylog/graylog:${GRAYLOG_VERSION}
@@ -38,8 +34,6 @@ services:
       - GRAYLOG_ROOT_PASSWORD_SHA2=${GRAYLOG_ROOT_PASSWORD_SHA2}
       - GRAYLOG_HTTP_EXTERNAL_URI=${GRAYLOG_HTTP_EXTERNAL_URI}
       - GRAYLOG_ROOT_TIMEZONE=Europe/Madrid
-    networks:
-      - graylog
     depends_on:
       - mongo
       - elasticsearch
@@ -54,9 +48,6 @@ services:
       - "12201:12201"
       # GELF UDP
       - "12201:12201/udp"
-
-networks:
-  graylog:
 
 volumes:
   mongo_data:

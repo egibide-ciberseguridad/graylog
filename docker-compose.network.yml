@@ -1,0 +1,6 @@
+version: "3.5"
+
+networks:
+  default:
+    name: ${EXTERNAL_NETWORK}
+    external: true

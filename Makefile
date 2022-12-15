@@ -27,6 +27,11 @@ _start:
 
 start: _header _start _urls
 
+_start-external-network:
+	@docker compose -f docker-compose.yml -f docker-compose.network.yml up -d graylog
+
+start-external-network: _header _start-external-network _urls
+
 stop:
 	@docker compose stop
 
