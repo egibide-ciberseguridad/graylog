@@ -1,6 +1,6 @@
-# graylog
+# Graylog
 
-Servidor de Graylog en contenedores Docker.
+Servidor de [Graylog](https://www.graylog.org) en contenedores Docker.
 
 ## Funcionamiento
 
@@ -9,6 +9,8 @@ make start
 ```
 
 ## Generar el salt y la contraseña
+
+Para configurar los valores en el `.env`.
 
 ```shell
 cat /dev/urandom | LC_ALL=C tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
@@ -25,6 +27,8 @@ Configurar el nombre de la red en el `.env` y borrar los contenedores y la red `
 ```shell
 make clean-containers-networks start-external-network
 ```
+
+> A partir de ese momento arrancarlo siempre con `start-external-network` en vez de `start`.
 
 ## Referencias
 
