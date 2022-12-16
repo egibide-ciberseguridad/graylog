@@ -4,14 +4,18 @@ Servidor de [Graylog](https://www.graylog.org) en contenedores Docker.
 
 ## Funcionamiento
 
-```shell
-make start
-```
+1. Configurar el fichero `.env`.
 
-Acceso a los servicios:
+2. Arrancar los contenedores:
 
-- [Graylog](http://localhost:9000)
-- [MailCatcher](http://localhost:1080)
+    ```shell
+    make start
+    ```
+
+3. Acceso a los servicios:
+
+    - [Graylog](http://localhost:9000)
+    - [MailCatcher](http://localhost:1080)
 
 ## Generar el salt y la contraseña
 
