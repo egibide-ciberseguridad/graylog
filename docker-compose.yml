@@ -29,6 +29,7 @@ services:
     image: graylog/graylog:${GRAYLOG_VERSION}
     volumes:
       - graylog_journal:/usr/share/graylog/data/journal
+      - ./config:/usr/share/graylog/data/config
     environment:
       - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
       - GRAYLOG_ROOT_PASSWORD_SHA2=${GRAYLOG_ROOT_PASSWORD_SHA2}
