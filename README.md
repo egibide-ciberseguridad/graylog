@@ -8,6 +8,11 @@ Servidor de [Graylog](https://www.graylog.org) en contenedores Docker.
 make start
 ```
 
+Acceso a los servicios:
+
+- [Graylog](http://localhost:9000)
+- [MailCatcher](http://localhost:1080)
+
 ## Generar el salt y la contraseña
 
 Para configurar los valores en el `.env`.
@@ -34,3 +39,4 @@ make clean-containers-networks start-external-network
 
 - [Installing Graylog > Docker](https://go2docs.graylog.org/5-0/downloading_and_installing_graylog/docker_installation.htm)
 - [Generating a random string on Linux & macOS](https://www.markusdosch.com/2022/05/generating-a-random-string-on-linux-macos/)
+- [Referencia del fichero server.conf](https://go2docs.graylog.org/5-0/setting_up_graylog/server.conf.html)

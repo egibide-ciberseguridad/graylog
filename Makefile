@@ -52,6 +52,7 @@ clean-containers-networks:
 
 _urls: _header
 	${info }
-	@echo -------------------------------
+	@echo -----------------------------------
 	@echo [Graylog] http://localhost:9000
-	@echo -------------------------------
+	@echo [MailCatcher] http://localhost:1080
+	@echo -----------------------------------

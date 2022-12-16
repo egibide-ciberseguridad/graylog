@@ -38,6 +38,7 @@ services:
     depends_on:
       - mongo
       - elasticsearch
+      - mailcatcher
     ports:
       # Graylog web interface and REST API
       - "9000:9000"
@@ -47,6 +48,11 @@ services:
       # GELF
       - "12201:12201"
       - "12201:12201/udp"
+
+  mailcatcher:
+    image: stpaquet/alpinemailcatcher:${MAILCATCHER_VERSION:-latest}
+    ports:
+      - "1080:1080"
 
 volumes:
   mongo_data:
