@@ -15,6 +15,7 @@ help: _header
 	@echo stop / stop-all
 	@echo stats / logs
 	@echo clean / clean-networks
+	@echo password / hash
 	@echo ---------------------------------
 
 _header:
@@ -51,6 +52,12 @@ clean:
 clean-networks:
 	@docker compose down --remove-orphans
 	@-docker network rm ${EXTERNAL_NETWORK}
+
+password:
+	@docker run --rm alpine /bin/sh -c 'cat /dev/urandom | LC_ALL=C tr -dc "a-zA-Z0-9" | fold -w 32 | head -n 1'
+
+hash:
+	@docker run -it --rm alpine /bin/sh -c 'echo -n "Enter Password: " && head -1 < /dev/stdin | tr -d "\n" | sha256sum | cut -d " " -f1'
 
 _urls: _header
 	${info }
