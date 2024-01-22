@@ -14,7 +14,7 @@ help: _header
 	@echo start / start-external-network
 	@echo stop / stop-all
 	@echo stats / logs
-	@echo clean / clean-containers-networks
+	@echo clean / clean-networks
 	@echo ---------------------------------
 
 _header:
@@ -28,6 +28,7 @@ _start:
 start: _header _start _urls
 
 _start-external-network:
+	@-docker network create --driver bridge ${EXTERNAL_NETWORK}
 	@docker compose -f docker-compose.yml -f docker-compose.network.yml up -d graylog
 
 start-external-network: _header _start-external-network _urls
@@ -47,8 +48,9 @@ logs:
 clean:
 	@docker compose down -v --remove-orphans
 
-clean-containers-networks:
+clean-networks:
 	@docker compose down --remove-orphans
+	@-docker network rm ${EXTERNAL_NETWORK}
 
 _urls: _header
 	${info }
