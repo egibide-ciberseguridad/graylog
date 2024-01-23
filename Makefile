@@ -48,10 +48,11 @@ logs:
 
 clean:
 	@docker compose down -v --remove-orphans
+	@-docker network rm -f ${EXTERNAL_NETWORK}
 
 clean-networks:
 	@docker compose down --remove-orphans
-	@-docker network rm ${EXTERNAL_NETWORK}
+	@-docker network rm -f ${EXTERNAL_NETWORK}
 
 secret:
 	@docker run --rm alpine /bin/sh -c 'cat /dev/urandom | LC_ALL=C tr -dc "a-zA-Z0-9" | fold -w 32 | head -n 1'
