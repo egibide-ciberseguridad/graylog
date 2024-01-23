@@ -63,6 +63,6 @@ hash:
 _urls: _header
 	${info }
 	@echo -----------------------------------
-	@echo [Graylog] http://localhost:9000
-	@echo [MailCatcher] http://localhost:1080
+	@echo [Graylog] http://${GRAYLOG_HOST}:${GRAYLOG_PORT}
+	@echo [MailCatcher] http://${GRAYLOG_HOST}:${MAILCATCHER_PORT}
 	@echo -----------------------------------

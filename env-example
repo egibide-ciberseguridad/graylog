@@ -4,7 +4,10 @@ GRAYLOG_VERSION=5.2.3
 
 GRAYLOG_PASSWORD_SECRET=1234567890abcdef # Aleatorio, mínimo 16 caracteres
 GRAYLOG_ROOT_PASSWORD_SHA2=900563a48c044074dc467feac110df09372301dbc10968c2c4491ad2398c93e6 # 12345Abcde
-GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
+
+GRAYLOG_HOST=localhost
+GRAYLOG_PORT=9000
+MAILCATCHER_PORT=1080
 
 # Red de Docker a la que se conectan los contenedores (tiene que existir previamente)
 EXTERNAL_NETWORK=ciberseguridad

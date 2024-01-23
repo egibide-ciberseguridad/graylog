@@ -33,7 +33,7 @@ services:
     environment:
       - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
       - GRAYLOG_ROOT_PASSWORD_SHA2=${GRAYLOG_ROOT_PASSWORD_SHA2}
-      - GRAYLOG_HTTP_EXTERNAL_URI=${GRAYLOG_HTTP_EXTERNAL_URI}
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://${GRAYLOG_HOST}:${GRAYLOG_PORT}/
       - GRAYLOG_ROOT_TIMEZONE=Europe/Madrid
     depends_on:
       - mongo
@@ -41,7 +41,7 @@ services:
       - mailcatcher
     ports:
       # Graylog web interface and REST API
-      - "9000:9000"
+      - "${GRAYLOG_PORT}:9000"
       # Syslog
       - "514:514"
       - "514:514/udp"
@@ -52,7 +52,7 @@ services:
   mailcatcher:
     image: stpaquet/alpinemailcatcher:${MAILCATCHER_VERSION:-latest}
     ports:
-      - "1080:1080"
+      - "${MAILCATCHER_PORT}:1080"
 
 volumes:
   mongo_data:
