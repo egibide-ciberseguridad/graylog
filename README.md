@@ -27,7 +27,7 @@ Servidor de [Graylog](https://www.graylog.org) en contenedores Docker.
 3. Acceso a los servicios:
 
     - [Graylog](http://localhost:9000)
-    - [MailCatcher](http://localhost:1080)
+    - [Mailpit](http://localhost:8025)
 
 4. El usuario para la configuración inicial del datanode es `admin` y la contraseña aparece en el log de Graylog.
 

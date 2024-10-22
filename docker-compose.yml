@@ -34,7 +34,7 @@ services:
     hostname: "server"
     depends_on:
       - datanode
-      - mailcatcher
+      - mailpit
     entrypoint: "/usr/bin/tini --  /docker-entrypoint.sh"
     environment:
       - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
@@ -57,10 +57,10 @@ services:
       - graylog_data:/usr/share/graylog/data/data
       - graylog_journal:/usr/share/graylog/data/journal
 
-  mailcatcher:
-    image: stpaquet/alpinemailcatcher:${MAILCATCHER_VERSION:-latest}
+  mailpit:
+    image: axllent/mailpit:${MAILPIT_VERSION:-latest}
     ports:
-      - "${MAILCATCHER_PORT}:1080"
+      - "${MAILPIT_PORT}:8025"
 
 volumes:
   mongo_data:

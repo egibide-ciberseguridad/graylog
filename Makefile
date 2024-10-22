@@ -24,7 +24,7 @@ _header:
 	@echo -------
 
 _start:
-	@docker compose up -d graylog
+	@docker compose up -d graylog --remove-orphans
 
 start: _header _start _urls
 
@@ -64,5 +64,5 @@ _urls: _header
 	${info }
 	@echo -----------------------------------
 	@echo [Graylog] http://${GRAYLOG_HOST}:${GRAYLOG_PORT}
-	@echo [MailCatcher] http://${GRAYLOG_HOST}:${MAILCATCHER_PORT}
+	@echo [Mailpit] http://${GRAYLOG_HOST}:${MAILPIT_PORT}
 	@echo -----------------------------------
