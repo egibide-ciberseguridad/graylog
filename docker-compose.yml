@@ -1,44 +1,49 @@
-version: "3.5"
-
 services:
 
-  mongo:
+  mongodb:
     image: mongo:${MONGODB_VERSION}
     volumes:
       - mongo_data:/data/db
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION}
-    volumes:
-      - es_data:/usr/share/elasticsearch/data
+  datanode:
+    image: graylog/graylog-datanode:${GRAYLOG_VERSION}
+    hostname: "datanode"
+    depends_on:
+      - mongodb
     environment:
-      - http.host=0.0.0.0
-      - transport.host=localhost
-      - network.host=0.0.0.0
-      - "ES_JAVA_OPTS=-Dlog4j2.formatMsgNoLookups=true -Xms512m -Xmx512m"
+      GRAYLOG_DATANODE_NODE_ID_FILE: "/var/lib/graylog-datanode/node-id"
+      GRAYLOG_DATANODE_PASSWORD_SECRET: "${GRAYLOG_PASSWORD_SECRET:?Please configure GRAYLOG_PASSWORD_SECRET in the .env file}"
+      GRAYLOG_DATANODE_ROOT_PASSWORD_SHA2: "${GRAYLOG_ROOT_PASSWORD_SHA2:?Please configure GRAYLOG_ROOT_PASSWORD_SHA2 in the .env file}"
+      GRAYLOG_DATANODE_MONGODB_URI: "mongodb://mongodb:27017/graylog"
     ulimits:
       memlock:
-        soft: -1
         hard: -1
-    deploy:
-      resources:
-        limits:
-          memory: 1g
+        soft: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "8999:8999/tcp"   # DataNode API
+      - "9200:9200/tcp"
+      - "9300:9300/tcp"
+    volumes:
+      - graylog_datanode:/var/lib/graylog-datanode
 
   graylog:
     image: graylog/graylog:${GRAYLOG_VERSION}
-    volumes:
-      - graylog_journal:/usr/share/graylog/data/journal
-      - ./config:/usr/share/graylog/data/config
+    hostname: "server"
+    depends_on:
+      - datanode
+      - mailcatcher
+    entrypoint: "/usr/bin/tini --  /docker-entrypoint.sh"
     environment:
       - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
       - GRAYLOG_ROOT_PASSWORD_SHA2=${GRAYLOG_ROOT_PASSWORD_SHA2}
       - GRAYLOG_HTTP_EXTERNAL_URI=http://${GRAYLOG_HOST}:${GRAYLOG_PORT}/
       - GRAYLOG_ROOT_TIMEZONE=Europe/Madrid
-    depends_on:
-      - mongo
-      - elasticsearch
-      - mailcatcher
+      - GRAYLOG_NODE_ID_FILE=/usr/share/graylog/data/data/node-id
+      - GRAYLOG_HTTP_BIND_ADDRESS=0.0.0.0:9000
+      - GRAYLOG_MONGODB_URI=mongodb://mongodb:27017/graylog
     ports:
       # Graylog web interface and REST API
       - "${GRAYLOG_PORT}:9000"
@@ -48,6 +53,9 @@ services:
       # GELF
       - "12201:12201"
       - "12201:12201/udp"
+    volumes:
+      - graylog_data:/usr/share/graylog/data/data
+      - graylog_journal:/usr/share/graylog/data/journal
 
   mailcatcher:
     image: stpaquet/alpinemailcatcher:${MAILCATCHER_VERSION:-latest}
@@ -56,5 +64,6 @@ services:
 
 volumes:
   mongo_data:
-  es_data:
+  graylog_datanode:
+  graylog_data:
   graylog_journal:

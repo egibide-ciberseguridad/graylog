@@ -29,6 +29,8 @@ Servidor de [Graylog](https://www.graylog.org) en contenedores Docker.
     - [Graylog](http://localhost:9000)
     - [MailCatcher](http://localhost:1080)
 
+4. El usuario para la configuración inicial del datanode es `admin` y la contraseña aparece en el log de Graylog.
+
 ## Red externa
 
 Configurar el nombre de la red en el `.env` y reiniciar los contenedores:
@@ -41,7 +43,7 @@ make clean-networks start-external-network
 
 ## Referencias
 
-- [Installing Graylog > Docker](https://go2docs.graylog.org/5-0/downloading_and_installing_graylog/docker_installation.htm)
+- [Graylog Docker Compose files](https://github.com/Graylog2/docker-compose)
+- [Install Graylog in Docker](https://go2docs.graylog.org/current/downloading_and_installing_graylog/docker_installation.htm)
 - [Generating a random string on Linux & macOS](https://www.markusdosch.com/2022/05/generating-a-random-string-on-linux-macos/)
-- [Referencia del fichero server.conf](https://go2docs.graylog.org/5-0/setting_up_graylog/server.conf.html)
 - [Use user-defined bridge networks](https://docs.docker.com/network/network-tutorial-standalone/#use-user-defined-bridge-networks)
