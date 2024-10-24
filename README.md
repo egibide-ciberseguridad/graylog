@@ -41,6 +41,10 @@ make clean-networks start-external-network
 
 > A partir de ese momento arrancarlo siempre con `start-external-network` en vez de `start`.
 
+## Estructura de contenedores
+
+![](docs/graylog.png)
+
 ## Referencias
 
 - [Graylog Docker Compose files](https://github.com/Graylog2/docker-compose)
