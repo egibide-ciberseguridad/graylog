@@ -27,7 +27,7 @@ services:
       - "9200:9200/tcp"
       - "9300:9300/tcp"
     volumes:
-      - graylog_datanode:/var/lib/graylog-datanode
+      - datanode_data:/var/lib/graylog-datanode
 
   graylog:
     image: graylog/graylog:${GRAYLOG_VERSION}
@@ -64,6 +64,6 @@ services:
 
 volumes:
   mongo_data:
-  graylog_datanode:
+  datanode_data:
   graylog_data:
   graylog_journal:
