@@ -13,6 +13,7 @@ help: _header
 	@echo ---------------------------------
 	@echo start / start-external-network
 	@echo stop / stop-all
+	@echo update
 	@echo stats / logs
 	@echo clean / clean-networks
 	@echo secret / hash
@@ -39,6 +40,9 @@ stop:
 
 stop-all:
 	@docker stop $(shell docker ps -aq)
+
+update:
+	@docker compose pull
 
 stats:
 	@docker stats
