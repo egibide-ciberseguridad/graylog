@@ -1,6 +1,6 @@
 # Versiones de los contenedores
 MONGODB_VERSION=8.0
-GRAYLOG_VERSION=6.3
+GRAYLOG_VERSION=7.2
 MAILPIT_VERSION=latest
 
 # Aleatorio, mínimo 64 caracteres
