@@ -12,7 +12,7 @@ help: _header
 	@echo Opciones:
 	@echo ---------------------------------
 	@echo start / start-external-network
-	@echo stop / stop-all
+	@echo stop
 	@echo update
 	@echo stats / logs
 	@echo clean / clean-networks
@@ -36,10 +36,7 @@ _start-external-network:
 start-external-network: _header _start-external-network _urls
 
 stop:
-	@docker compose stop
-
-stop-all:
-	@docker stop $(shell docker ps -aq)
+	@docker compose down
 
 update:
 	@docker compose pull
